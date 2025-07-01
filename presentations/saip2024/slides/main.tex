@@ -1,0 +1,168 @@
+\begin{frame}{Computing Potential Energy Surfaces}
+  \begin{columns}
+    \begin{column}{0.5\linewidth}
+      \begin{itemize}
+        \setlength\itemsep{0.1em}
+        \item Minima correspond to {\color{red}stable geometry}.
+        \item Saddle points correspond to {\color{red}transition states} in chemical reactions.
+        \item Identification of energetically favourable reaction pathways.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\linewidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{h2o_symmetric_pes.pdf}
+        \caption{
+          Schematic of a potential energy surface of a symmetrically stretched water molecule.
+          $R$ is varied from smaller $\sim 0.5 \AA$ to $\sim 2.5 \AA$. The bond angle $\alpha$ between
+          the hydrogen atoms is fixed at $\alpha = 104.478 ^{\circ}$.
+        }
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{Active spaces}
+    \begin{figure}
+      \centering
+      \includegraphics[width=1.0\textwidth]{active_space_diagram.pdf}
+      \caption{
+        A complete active space splits molecular orbitals into three non-overlapping groups:
+        {\color{red}inactive}(or core) orbitals which always be fully occupied (wih two electrons).
+        {\color{red}active} orbitals, which can be partially occupied.
+        {\color{red}virtual}(or external) orbitals; these must always be empty.
+        The notation CAS(n,m) is often used to denote a active space,
+        where n is the number of active electrons and m is the number of active orbitals
+      }
+    \end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Computing Potential Energy Surfaces}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.8\linewidth]{h2o_symmetric_benchmark_energies_rohf_sto3g.pdf}
+      \caption{
+        Potential energy surface for symmetrically stretched water molecule
+        at different levels of theory: Full configuration (FCI), Hartree Fock (HF),
+        Complete Active Space Self Consistent Field (CASSCF) using minimal STO-3G.
+      }
+    \end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Computing Potential Energy Surfaces}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.8\linewidth]{h2o_symmetric_benchmark_energies_rohf_sto6g.pdf}
+      \caption{
+        Potential energy surface for symmetrically stretched water molecule
+        at different levels of theory: Full configuration (FCI), Hartree Fock (HF),
+        Complete Active Space Self Consistent Field (CASSCF) using minimal STO-6G.
+      }
+    \end{figure}
+\end{frame}
+
+
+
+\begin{frame}{IBM Quantum Experiments}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{127-qubit-qcpu.pdf}
+    \caption{Qubit layout of the 127-qubit ibm\_kyoto (Eagle r3) quantum processor available over the cloud through IBM Quantum API.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{IBM Quantum Experiments}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{before_now_circuit_execution.pdf}
+    \caption{
+      Runtime reduces the waiting time associated with running quantum
+      algorithms on real hardware devices. Classical parts of a hybrid are
+      executed on an IBM Server near the quantum hardware, reducing latency.
+    }
+    % executing the classical parts of a hybrid
+    % quantum-classical algorithm on an IBM server closely located to the
+    % actual device, thereby minimizing communication overhead.
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Error mitigation: Readout mitigation}
+  Assumption: Measurement errors satisfy
+
+  \begin{align*}
+    p_\text{noisy} &=  \Lambda p_\text{ideal},
+  \end{align*}
+
+  where $p_\text{ideal}$ and $p_\text{noisy}$ are vector probabilities arranged
+  into a matrix returned from computation without and with measurement errors
+  respectively, and $\Lambda$ is an invertible matrix.
+
+  \vspace{2ex}
+
+  Execute appropriate $2^n$ circuits noisy quantum hardware to measure
+  $p_\text{noisy}$. Estimate $\Lambda^{-1}$ as $\tilde{\Lambda}^{-1}$ with {\color{red}Quantum Detector
+  Tomography}. Then
+
+  \begin{align*}
+    p_\text{mitigated} \approx p_\text{ideal} &= \tilde{\Lambda}^{-1}p_\text{noisy}.
+  \end{align*}
+
+
+  % If
+  % $M$ is invertible then, then $C_\text{noisy}$  can transformed into
+  % % $C_\text{ideal}$ by finding $M^{-1}$
+  %
+  % \begin{align}
+  %   C_\text{ideal} &=  M^{-1}C_\text{noisy}.
+  % \end{align}
+  % In reducing the effect of noise due to final measurement errors, Qiskit
+  % recommend a measurement error mitigation approach. The approach starts off by
+  % creating circuits that each perform measurement of the $2^n$ basis states. With
+  % the results, a matrix $C_\text{noisy}$ called the calibration matrix is
+  % constructed. The approach assumes that there is a matrix $M$ such that
+\end{frame}
+
+
+\begin{frame}{Error mitigation: Zero Noise Extrapolation}
+   \begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{noise_amplification.pdf}
+     \caption{Global noise amplification: Amplifies noise digitally by "folding" each gate to a desired noise level.}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}{Error mitigation: Zero Noise Extrapolation}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{zne_schematic.pdf}
+    \caption{Extrapolatation to the noiseless limit: Fit a function $f$ to the measured noise-scaled expectation values and extrapolate to limit of no noise.}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}{Classical optimization algorithms}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item {\color{red}COBYLA} uses linear approximations of the target and constraint function to optimize a simplex within a trust region of the parameter space.
+        \begin{itemize}
+          \item Evaluates the cost function without use of gradients.
+          \item Susceptible to get stuck in local minima.
+          \item Relatively simple to implement.
+        \end{itemize}
+    \item {\color{red}SPSA} employs a stochastic perturbation vector to compute an approximate gradient of the cost function simultaneously.
+        \begin{itemize}
+          \item Works well for noisy functions.
+          \item An SPSA step only requires two cost function evaluations; independent of the number of parameters for the cost function.
+          %% (Making it applicable to problems with many dimensions.)
+          \item Performance highly-dependent on the hyperparameters.
+          %% (especially step and perturbation sizes.)
+          \item Can be easily parallelized.
+        \end{itemize}
+  \end{itemize}
+\end{frame}

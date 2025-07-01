@@ -1,0 +1,34 @@
+\begin{frame}{Scaling up to larger systems}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.5\linewidth]{ef_schematic.pdf}
+      \caption{
+        Entanglement Forging (EF) exploits the structural properties of the
+        simulated system, to decompose a large quantum circuit into smaller
+        sub-circuits and knitting their results to estimate the output of the
+        larger quantum circuit. In this way, this archetype address the
+        limitations of near-future quantum computers (which permit only small,
+        and often approximate, simulations over a few qubits with short
+        coherence times) and thereof extends the capabilities.
+        % Large systems can be broken down into smaller subsystems
+        % which can be fit in smaller QCPUS at the cost of classical
+        % post-processing, which recovers some of the lost quantum correlations
+        % and combines results from the smaller subsystems to approximate to estimate
+      }
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{EF results (Noisy simulations)}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.5\textwidth]{ibm_kyoto_noisy_sim_ef_cobyla_23_pes.pdf}
+      \caption{
+        Potential energy surface for symmetrically stretched water molecule. In
+        the upper plots, EF + VQE results for a noisy simulation of ibm kyoto appear
+        alongside curves indicating the classically computed Hartree Fock (HF),
+        Complet Active Space Self Consistent Field (CASSCF) for the active
+        space (2e,3o) and full configuration interaction (FCI) values using the STO-6G basis.
+      }
+    \end{figure}
+\end{frame}

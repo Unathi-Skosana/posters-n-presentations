@@ -1,0 +1,254 @@
+%     \item To understand the practical aspects of modeling and simulating small-scale molecular systems with quantum computing methods on near-term quantum computing hardware.
+%     \item In the near-term, one of the most promising and viable quantum computing methods for doing thus are variational quantum algorithms (VQAs) in conjunction with error mitigation techniques.
+%
+\begin{frame}{Original aims}
+    To understand how to perform quantum simulations efficiently on current small-scale {\color{red}Noisy Intermediate Scale Quantum (NISQ)} processors and how these simulations
+    can be scaled up for forthcoming large-scale processors in the near future.
+\end{frame}
+
+\begin{frame}{Original objectives}
+    The objectives for the first part of the project involve using new {\color{red} Quantum Phase Estimation (QPE)} techniques and comparing their performance
+    with the {\color{red}Variational Quantum Eigensolver (VQE)} method on IBM quantum processors for a selection of quantum chemistry systems:
+
+    \vspace{2ex}
+
+    \begin{enumerate}
+      \setlength\itemsep{0.1em}
+      \item[O1] Basic system – H2
+      \item[O2] Medium system – H2O
+      % \item[O3] Hard system – Chlorophyll units in LHII complex or a system of a similar
+    \end{enumerate}
+
+    \vspace{2ex}
+
+    We soon learned that QPE techniques are quite resource-intensive, even for a basic molecular system such as H2; \textbf{i.e.}
+    decimal point accuracy of calculated quantities with QPE is in direct proportion to the number of phyisical qubits needed. Henceforth,
+    we only focused on VQE techniques for objectives O1 and O2.
+\end{frame}
+
+
+\begin{frame}{O1}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item H2 system is simplest instance we considered. Electronic hamiltonian of this system is mapped to a 4-qubit Hamiltonian in the minimal basis STO-3G.
+    \item We experimentally computed the electronic energies of the H2 system at varying interatomic distances (points sampled between {\color{teal}0.4 to 3.5}).
+    \item We successfully carried out with VQE experiments on a physical device (\textbf{ibmq\_guadalupe}).
+    \item Obtaining experimental results that closely matche the expected results computed classically via PySCF.
+    \item The experiments are carried over the cloud through the Qiskit SDK which includes Qiskit Nature for Quantum Chemistry
+    \item I have since then had contributed two significant occasions now :D!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O1}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item The first instance of the experiment was done without any further simplifications; requiring a total of 4 qubits.
+    \item The second instance of the experiment, the qubit Hamiltonian was simplified to 2 qubits by exploiting present symmetries.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O1: Lessons}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item These set of experiments served a pedagogic purpose without being encumbered with the complexities of large molecular systems,
+          we encountered later in the project.
+    \item We achieved results very close to {\color{red}chemical accuracy ($\Delta E < 1.6 \>\text{mHa}$)} without any error mitigation
+          techniques.
+    \item Problem reduction techniques such as exploiting symmetry to reduce problem size
+          are useful in getting a handle at a problem on near-term hardware, and will be reoccuring theme in various guises.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{O2}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item In the minimal basis STO-3G, electronic Hamiltonian of H2O is mapped to a 14-qubit Hamiltonian.
+    \item We wished to compute the electronic energies of the H2O system along the reaction coordinates
+          that symmetrically stretch the hydrogen atoms around oxygen atom while keeping the angle between them fixed.
+    \item However, for IBM Quantum devices available on the cloud at the time, maintaining coherence over this many qubits for this kind of problem was not trivial.
+    \item Instead of considering all the orbitals in molecular system, we consider only a subset of orbitals.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{O2: Active Spaces}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item The set of orbitals and the number of electrons in them is called an {\color{red} Active Space (AS)}.
+          An active space of 2 electrons and 3 orbitals is denoted (2e,3o).
+    \item The energy contributions from the AS are computed on a quantum computer using VQE,
+          the contributions from orbitals outside the AS are computed classically.
+    \item The two contributions are added together to obtain the approximate total electronic energy.
+    \item If the subset is chosen carefully (i.e automated with {\color{blue}AutoCAS, AVAS}) energies calculated in this manner can be in good qualitative
+          agreement with energies calcuated from a full set of orbitals.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{O2: Active Spaces}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Using PySCF, we classically computed energies obtained along the aforemetioned reaction coordinates
+          using a subset of orbitals from size 2 to 10.
+    \item Found that we approach {\color{red}chemical accuracy ($\Delta E < 1.6 \>\text{mHa}$)} for the minimal bases STO-3G/STO-6G.
+    \item Active spaces are chosen around the {\color{red}Fermi level}, unless mentioned otherwise.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{O2: Lessons}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Starting from two of the smallest active spaces; (2e,3o) and (4e,4o); we conducted VQE experiments on various IBM Quantum devices obtained a mixed bag of results.
+
+    \item The choice of ansatz matters significantly, as it determines the possible quantum states can be accessed during VQE optimization.
+
+    \item Through a heuristic process of trying many different ansatzes,
+      I have found that heuristic {\color{red}two-local} ansatz with Hop gates $h(\varphi)$ as entangling blocks tends to the best:
+      \begin{align*}
+        h(\varphi) =
+          \begin{bmatrix}
+            1 & 0               &  0                & 0 \\
+            0 & \cos{(\varphi)} & -\sin{(\varphi)}  & 0 \\
+            0 & \sin{(\varphi)} &  \cos{(\varphi)}  & 0 \\
+            0 & 0               &  0                & -1
+          \end{bmatrix}.
+      \end{align*}
+
+    \item A product of hop gates is universal with respect to real-valued wavefunctions of fixed-particle number.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: Lessons}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Hence, such an ansatz is a hybrid between being hardware efficient and chemically inspired ansatz.  We refer to such an ansatz as a heuristic ansatz.
+
+    \item Another note-worthy heuristic ansatz is excitation preserving made up of entangling blocks of the form
+      \begin{align*}
+        e(\theta, \phi) =
+          \begin{bmatrix}
+            1 & 0                  &  0                  & 0 \\
+            0 & \cos{(\theta/2)}   & -i\sin{(\theta/2)}  & 0 \\
+            0 & -i\sin{(\theta/2)} &  \cos{(\theta/2)}   & 0 \\
+            0 & 0                  &  0                  & e^{-i\phi}
+          \end{bmatrix}.
+      \end{align*}
+
+    \item The choice of optimization algorithm matters. In my experimentation, I have found that gradient-free optimizers
+          such as Constrained Optimization By Linear Approximation (COBYLA) tend work well.
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: Lessons}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item COBYLA tends to be stable and converge with fewer iterations than gradient-based optimizer
+          such as Simultaneous Perturbative Stochastic Approximation (SPSA).
+
+    \item When using two-local ansatz with $\text{R}_{Y}(\theta)$ and CZ as rotation and entanglement blocks, respectively.
+          Around 1.5 $\AA$ (consistent among multiple plots), the energies spike up and jump roughly by 0.5 Hartrees.
+
+    \item The same bumps show up in literature. Explained as being due to jumps between electronic states of different symmetries ($\expval*{\hat{S}}, \expval*{\hat{N}_e}, \expval*{\hat{S}_z}$) within the Fock space.
+
+    \item Bumps can be mitigated performing penalty constrained optimization.
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: Lessons}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Circuit knitting techniques such as {\color{red}Entanglment Forging (EF)} can also reduce the size of the problem
+          to be treated on a quantum computer by shifting some of the commputation to classical post-processing.
+
+    \item For instance with entanglment forging, a suitable problem of requiring 6 qubits i.e can be reduced to a problem on 3 qubits bar classical overhead.
+
+    \item We conducted VQE experiments on various IBM Quantum devices obtained a mixed bag of results.
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: Lessons}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Circuit knitting techniques such as {\color{red}Entanglment Forging (EF)} can also reduce the size of the problem
+          to be treated on a quantum computer by shifting some of the commputation to classical post-processing.
+
+    \item For instance with entanglment forging, a suitable problem of requiring 6 qubits i.e can be reduced to a problem on 3 qubits bar classical overhead.
+
+    \item Similarly, we conducted VQE+EF experiments on a IBM Quantum devices over cloud. However, we obtained an incomplete set of results that are not conclusive.
+
+    \item This was due to variety of reasons ...
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: Blockers}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item The turnaround time between generating an idea, testing it on a physical processor,
+          become notably longer due to popularity of the service.
+
+    \item While our current quantum computational workflows have grown in complexity and computational demands
+      i.e compared to Shor's algorithm workflow from our previous paper
+
+    \item The introduction of the Qiskit Runtime resulted in significant changes and breaking updates. Slowly downing progress
+
+    \item IBM Quantum subscription was suspended for a lengthy period of time.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: New ideass}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Incorporate hyperparameter tuning step at the begining of the VQE workflow.
+
+    \item {\color{red}Hyperparameter tuning} is necessary for inherently-noisy VQAs.
+
+    \item Variational landscape that one finds in a VQA is highly problem and device-dependent.
+
+    \item Ideally, hyperparameter tuning runs would performed on a real physical device too.
+          However, this infeasible for us as our time on IBM Quantum is very limited.
+
+    \item Instead, we checkpoint the noise model of a particular device and classically hyperparameter tuning experiments.
+
+    \item Once we have found the best hyperparameters to initialize the chosen optimization algorithm for an experiment on a physical device.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{O2: New ideas}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item During the time when IBM Quantum subscription was suspended. I rewrote the code we had been using thus far
+          to incorporate hyperparameter tuning. Hyperparameter tuning is done with {\color{blue}Optuna}.
+
+    \item The code also standardizes the data storage of experimental data i.e stored inside local {\color{blue}SQLite} 
+          databases.
+
+    \item The progress of experiments can be tracked remotely through {\color{blue}WandB},
+          which also stores the experimental data locally.
+
+    \item The new codebase with all these additions is called {\color{red}VQUNE} and will open-source it at some point.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{O2: New experiments}
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+
+    \item We designed a new set of experiments which incorporate hyperparameter tuning: which use COBYLA and SPSA as optimization algorithms with and without ZNE .
+
+    \item Additionally, our plight forced to considered a new and much reduced set of reaction coordinates
+          (hydrogen atoms are symmetrically stretched around oxygen atom while keeping the angle between them fixed)
+
+    \item During a period of roughly three weeks, we were able to perform these some of experiments.
+
+    \item For experiments using the COBYLA optimization algorithm, the new set of results show significant improvements when hyperparameter tuning is done beforehand.
+
+    \item For experiments using the SPSA optimization algorithm, the new set of results are incomplete and still being collected.
+  \end{itemize}
+\end{frame}

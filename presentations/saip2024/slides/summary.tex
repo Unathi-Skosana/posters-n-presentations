@@ -1,0 +1,45 @@
+\begin{frame}{Summary}
+   \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item In our real quantum device experiments, the combination of a hyperparameter-tuned {\color{red}COBYLA} optimizer with zero noise extrapolation
+          seems to produce results are comparatively better than those from a hyperparameter-tuned COBYLA optimizer without zero noise extrapolation.
+
+    \item Hence, even with hyperparameter tuning raw experimental results [without zero noise extrapolation] can be below par.
+
+    \item Error mitigation (measurement error mitigation + ZNE) seems to remove undesirable features in PES, such as the observed kinks/dumps on jarkata near disassociation
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+   \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item For classically intracble molecular systems, hyperparameter tuning can be done online as part of the VQE pipeline/workflow
+          i.e performed on the on quantum device of interest.
+
+    \item For classically tractable molecular systems, one is has the option of doing either online and offline hyperparameter
+          tuning, in our studies we found that offline hyperparameter tuning can significantly improve the performance
+          of the {\color{red}COBYLA} optimizer (and other optimizers such as SPSA) for error-mitigated and non-error-mitigated landscapes
+          on a real quantum device. We suspect that performance would be improved further if done online.
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+   \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item For a molecular system where both offline and online hyperparameter tuning are feasible,
+          the choice is mostly influenced by practical considerations, i.e. amount quantum
+          compute time available. In our case, we had limited quantum compute time, hence
+          offline hyperparameter tuning.
+
+    \item It may well be that there are other techniques that one can use on a smaller
+          truncated molecular system with similar chemical/molecular
+          features that allow efficient tuning on classical and quantum computers.
+
+
+   % Note: Even with hyperparameter tuning, raw exp. results can be bad. Seems like the combination of tuning + ZNE works better
+   % just that one can simulate a few runs of the system classically to get the hyperparameters roughly,
+   % or use up some of the runs on a quantum computer before doing the full
+   % optimisation routine.
+   \end{itemize}
+\end{frame}

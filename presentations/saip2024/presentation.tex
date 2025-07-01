@@ -1,0 +1,99 @@
+% Auriga theme
+% https://github.com/anishathalye/auriga
+
+\documentclass[xcolor={dvipsnames,rgb},169,t]{beamer}
+\usepackage{pgfpages}
+\usepackage{fancyvrb}
+
+%%% tikz & libraries
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{tikzmark} % for \tikzmarknode
+\usetikzlibrary{calc} % for computing the midpoint between two nodes, e.g. at ($(p1.north)!0.5!(p2.north)$)
+\usetikzlibrary{3d}
+\usetikzlibrary{positioning,arrows,fit}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{annotate-equations}
+
+% figures, graphics
+\usepackage{mhchem}
+\usepackage{physics}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\graphicspath{{gfx/}}
+
+% hyperref
+\usepackage{hyperref}
+\usepackage{xkcdcolors}
+
+\usepackage[export]{adjustbox}
+
+% custom commands
+\newcommand{\refcite}[1]{Ref.~\cite{#1}}
+\newcommand{\refeq}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\reffig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\reftab}[1]{Tab.~\ref{tab:#1}}
+\newcommand{\refsec}[1]{Sec.~\ref{sec:#1}}
+\newcommand{\refsubsec}[1]{Subsec.~\ref{subsec:#1}}
+
+% Commands for Highlighting text -- non tikz method
+\newcommand{\highlight}[2]{\colorbox{#1!17}{$#2$}}
+\newcommand{\highlightdark}[2]{\colorbox{#1!47}{$#2$}}
+%%% NOTE: \colorbox sets the second argument in text mode, so for use within equations we wrap it in $ $ again
+% if you use \highlight or \highlightdark in subscripts, you need to pass \scriptstyle to get the font size right
+% e.g. $ \mathbb{E}_{\highlight{BurntOrange}{\scriptstyle y}} $
+
+
+\renewcommand\vec[1]{\boldsymbol{#1}}
+
+
+\ifnotes
+\setbeamertemplate{note page}[plain]
+\setbeameroption{show notes on second screen=right}
+\fi
+
+\usetheme{auriga}
+\usecolortheme{auriga}
+
+% define some colors for a consistent theme across slides
+\definecolor{red}{RGB}{181, 23, 0}
+\definecolor{blue}{RGB}{0, 118, 186}
+\definecolor{gray}{RGB}{146, 146, 146}
+
+\title{\textbf{End-to-end Integration of Hyperparameter Tuning into Variational Quantum Algorithms}}
+\author{\large Unathi Skosana}
+\author{large Mark Tame}
+\author{\large \underline{Unathi Skosana} and Mark Tame}
+\institute[shortinst]{\large\textbf{Stellenbosch University}}
+\date{\\ \bigskip \large\textbf{SAIP2024}}
+
+% \institute[shortinst]{\inst{1} Some Institute \samelineand \inst{2} Another Institute}
+
+% If one wants to modify the title page... here's the default code
+\begin{document}
+
+{
+  % rather than use the frame options [noframenumbering,plain], we make the
+  % color match, so that the indicated page numbers match PDF page numbers
+  % \setbeamercolor{page number in head/foot}{fg=background canvas.bg}
+  \begin{frame}[plain]
+    \titlepage
+  \end{frame}
+}
+
+%
+\input{slides/introduction}
+\input{slides/vqas}
+\input{slides/case_study}
+% \input{slides/preliminaries}
+% \input{slides/main}
+% \input{slides/results}
+% \input{slides/scaling}
+% \input{slides/summary}
+
+
+\end{document}

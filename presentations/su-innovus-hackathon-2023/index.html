@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Augustus</title>
+
+  <meta name="description" content="An AI-powered chatbot for building UI/UX in NextJS 13">
+  <meta name="author" content="delicht0">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+
+  <!-- A -->
+  <script src="plugin/embed-tweet/plugin.js"></script>
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+
+    <div class="slides">
+
+      <section data-background-color="white">
+        <div class="flex min-h-full items-center justify-center w-full">
+          <div>
+            <div class="text-6xl text-left font-medium">Augustus</div>
+            <div class="text-3xl text-left text-neutral-400">
+              An AI-powered chatbot fine-tuned for building UI/UX in nextjs 13.
+            </div>
+          </div>
+          <div class="float-right">
+            <img width="450" class="rounded-lg" data-src="assets/images/3.png" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Table of contents -->
+
+      <section class="h-full w-full text-left">
+        <div class="mb-24">
+          <div class="text-6xl font-medium">Overview</div>
+          <div class="text-3xl text-neutral-400">Augustus</div>
+        </div>
+
+
+        <div class="pl-32 space-y-4">
+          <div>
+            <div class="text-4xl font-medium">Motivation <span class="fragment fade-in">👈🏾</span></div>
+            <div class="text-3xl text-neutral-400">How does Augustus address challenge problem?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Internals of Augustus</div>
+            <div class="text-3xl text-neutral-400">How makes Augustus tick?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Features</div>
+            <div class="text-3xl text-neutral-400">What can Augustus do?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Outlook</div>
+            <div class="text-3xl text-neutral-400">What Augustus will be able to do?</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Motivation -->
+
+      <section class="w-full h-full text-left">
+        <section>
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address the challenge problem?</div>
+          </div>
+
+
+          <div class="max-w-5xl pt-8">
+            <div class="text-5xl font-medium">Where to start?</div>
+            <div class="text-4xl text-neutral-400 fragment fade-in">
+              Some of the best UI/UX experiences out there are use-case and domain-specific (Amazon, Cash App, etc).
+              <span class="fragment fade-in">
+                Solving this even for a particular case requires domain-specific knowledge.
+              </span>
+            </div>
+          </div>
+        </section>
+
+
+        <section>
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address the challenge problem?</div>
+          </div>
+
+
+          <div class="max-w-5xl pt-8">
+            <div class="text-5xl font-medium">But what if ...💡</div>
+            <div class="text-4xl text-neutral-400 fragment fade-in">
+              ... we can fast-track (10x -> 100x) development-cycle of someone (👨‍💻 👩‍💻) with
+              somewhat of an idea of the domain-specific and nuanced knowledge for a specific UI/UX?
+              <span class="fragment fade-in">
+                <emph>e.g.</emph> Quickly iterate over user feedback and live test with A/B testing.
+              </span>
+              <!-- Simple changes like text or color modifications are generally quick to implement. However, more complex alterations, like restructuring page layouts or adding new functionalities, may require more time -->
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address the challenge problem?</div>
+          </div>
+
+
+          <main class="flex flex-1 h-full w-full items-center justify-center my-auto">
+            <h1>
+              🤖
+            </h1>
+          </main>
+        </section>
+
+        <section>
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address the challenge problem?</div>
+          </div>
+
+
+          <div class="max-w-5xl pt-12">
+            <div class="w-full max-w-xl tweet"
+              data-src="https://twitter.com/karpathy/status/1617979122625712128?lang=en"></div>
+          </div>
+        </section>
+
+
+        <section>
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address the challenge problem?</div>
+          </div>
+
+
+          <div class="max-w-5xl pt-12">
+            <div class="text-5xl text-white font-medium">Solution</div>
+            <div class="text-4xl text-neutral-400">
+              <span class="font-display">Augustus</span> leverages multi-modals LLMs to help developers iterate their
+              UI/UX designs in record time.
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="h-full w-full text-left">
+        <div class="mb-24">
+          <div class="text-6xl font-medium">Overview</div>
+          <div class="text-3xl text-neutral-400">Augustus</div>
+        </div>
+
+
+        <div class="pl-32 space-y-4">
+          <div>
+            <div class="text-4xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address challenge problem?</div>
+          </div>
+
+
+
+          <div>
+            <div class="text-4xl font-medium">Internals of Augustus 👈🏾</div>
+            <div class="text-3xl text-neutral-400">How makes Augustus tick?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Features</div>
+            <div class="text-3xl text-neutral-400">What can Augustus do?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Outlook</div>
+            <div class="text-3xl text-neutral-400">What Augustus will be able to do?</div>
+          </div>
+
+        </div>
+      </section>
+
+      <section>
+        <section class="h-full w-full text-left">
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Internals of Augustus</div>
+            <div class="text-3xl text-neutral-400">What makes Augustus tick?</div>
+          </div>
+
+
+          <div class="max-w-5xl pt-12">
+            <div class="text-4xl text-neutral-400">
+              Augustus is a multi-modal AI-powered chatbot fine-tuned for building UI/UX in nextjs 13.
+            </div>
+          </div>
+        </section>
+        <section>
+          <section class="h-full w-full text-left">
+            <div class="pb-2">
+              <div class="text-6xl font-medium">Internals of Augustus</div>
+              <div class="text-3xl text-neutral-400">What makes Augustus tick?</div>
+            </div>
+
+
+            <div class="w-full flex flex-1 items-center justify-center">
+              <img class="r-fit" width="500" data-src="assets/images/component_library_example.png" />
+            </div>
+          </section>
+        </section>
+        <section>
+          <section class="h-full w-full text-left">
+            <div class="pb-2">
+              <div class="text-6xl font-medium">Internals of Augustus</div>
+              <div class="text-3xl text-neutral-400">What makes Augustus tick?</div>
+            </div>
+
+
+            <div class="w-full flex flex-1 items-center justify-center">
+              <img class="r-fit" width="500" data-src="assets/images/curate_fine_tune_dataset.png" />
+            </div>
+          </section>
+        </section>
+        <section class="h-full w-full text-left">
+          <div class="pb-2">
+            <div class="text-6xl font-medium">Internals of Augustus</div>
+            <div class="text-3xl text-neutral-400">What makes Augustus tick?</div>
+          </div>
+
+
+          <div class="flex flex-1 items-center justify-center">
+            <img height="500" data-src="assets/images/fine_tune_model_on_dataset.png" />
+          </div>
+        </section>
+
+        <section class="h-full w-full text-left">
+          <div class="pb-2">
+            <div class="text-6xl font-medium">Internals of Augustus</div>
+            <div class="text-3xl text-neutral-400">What makes Augustus tick?</div>
+          </div>
+
+
+          <div class="flex flex-1 items-center justify-center">
+            <img class="r-stretch w-full max-w-2xl" data-src="assets/images/stackblitz.png" />
+          </div>
+        </section>
+
+        <section class="h-full w-full text-left">
+          <div class="pb-2">
+            <div class="text-6xl font-medium">Internals of Augustus</div>
+            <div class="text-3xl text-neutral-400">What makes Augustus tick?</div>
+          </div>
+
+
+          <div class="flex flex-1 items-center justify-center">
+            <img class="r-stretch w-full max-w-2xl" data-src="assets/images/stackblitz_with_augustus.png" />
+          </div>
+        </section>
+      </section>
+
+      <section class="h-full w-full text-left">
+        <div class="mb-24">
+          <div class="text-6xl font-medium">Overview</div>
+          <div class="text-3xl text-neutral-400">Augustus</div>
+        </div>
+
+
+        <div class="pl-32 space-y-4">
+          <div>
+            <div class="text-4xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address challenge problem?</div>
+          </div>
+
+
+
+          <div>
+            <div class="text-4xl font-medium">Internals of Augustus </div>
+            <div class="text-3xl text-neutral-400">How makes Augustus tick?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Features 👈🏾</div>
+            <div class="text-3xl text-neutral-400">What can Augustus do?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Outlook</div>
+            <div class="text-3xl text-neutral-400">What Augustus will be able to do?</div>
+          </div>
+
+        </div>
+      </section>
+
+      <section data-background-color="aquamarine">
+        <section class="h-full w-full text-left">
+          <div class="pb-24">
+            <div class="text-6xl text-black font-medium">Features</div>
+            <div class="text-3xl text-black">What can Augustus do?</div>
+          </div>
+
+
+          <main class="flex items-center justify-center my-auto">
+            <h1>
+              🍦
+            </h1>
+          </main>
+        </section>
+      </section>
+
+      <section class="h-full w-full text-left">
+        <div class="mb-24">
+          <div class="text-6xl font-medium">Overview</div>
+          <div class="text-3xl text-neutral-400">Augustus</div>
+        </div>
+
+
+        <div class="pl-32 space-y-4">
+          <div>
+            <div class="text-4xl font-medium">Motivation</div>
+            <div class="text-3xl text-neutral-400">How does Augustus address challenge problem?</div>
+          </div>
+
+
+
+          <div>
+            <div class="text-4xl font-medium">Internals of Augustus </div>
+            <div class="text-3xl text-neutral-400">How makes Augustus tick?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Features</div>
+            <div class="text-3xl text-neutral-400">What can Augustus do?</div>
+          </div>
+
+          <div>
+            <div class="text-4xl font-medium">Outlook 👈🏾</div>
+            <div class="text-3xl text-neutral-400">What Augustus will be able to do?</div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section>
+        <section class="h-full w-full text-left">
+          <div class="pb-24">
+            <div class="text-6xl font-medium">Outlook</div>
+            <div class="text-3xl text-neutral-400">What Augustus will be able to do?</div>
+          </div>
+
+
+          <div class="w-full max-w-6xl pt-12">
+            <div class="text-4xl text-neutral-400 fragment fade-in">
+              - Improve code generation (larger dataset)
+            </div>
+            <div class="text-4xl text-neutral-400 fragment fade-in">
+              - Improve speech recognition (OpenAI Whisper)
+            </div>
+            <div class="text-4xl text-neutral-400 fragment fade-in">
+              - Vision modality (Upload figma design)
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section data-background-color="white">
+        <div class="flex min-h-full items-center justify-center w-full">
+          <div>
+            <div class="text-6xl text-left font-medium">Augustus</div>
+            <div class="text-3xl text-left text-neutral-400">
+              An AI-powered chatbot fine-tuned for building UI/UX in nextjs 13.
+            </div>
+          </div>
+          <div class="float-right">
+            <img width="450" class="rounded-lg" data-src="assets/images/3.png" />
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/zoom/zoom.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/search/search.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script>
+
+    // Also available as an ES module, see:
+    // https://revealjs.com/initialization/
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: false,
+      hash: true,
+
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealEmbedTweet]
+    });
+
+  </script>
+
+</body>
+
+</html>

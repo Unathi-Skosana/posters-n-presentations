@@ -1,0 +1,120 @@
+\begin{frame}{Hyperparameter tuning}
+    Variational landscapes for VQAs are problem-specific and device-dependent.
+    Performance of the off the shell optimizers can vary drastically if not
+    tuned to the problem at hand.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.75\linewidth]{energy_landscapes.pdf}
+      \caption{
+        Energy landscapes showing the effects of certain types of noise models.
+        Adapted from \href{https://quantum-journal.org/papers/q-2024-03-14-1287/pdf}{here}
+      }
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}{Hyperparameter tuning}
+
+    Hyperparameter tuning can be {\color{red}offline}; that is, before the actual
+    experiments to get the best hyperparameters using a noise model of the device
+    of interest. This is working under the assumption that the molecualr system of interest
+    is small enough (requiring a moderate number of qubits) to be classically simulated.
+
+    \vspace{2ex}
+
+    It can also be done {\color{red}online}, where the tuning happens on the actual device of
+    interest. i.e. the budget of the original experiments is split between
+    tuning and training runs, where a small fraction of the budget is spent
+    on the expanded tuning runs prior to training runs.
+
+    % online means that a linear overhead in time for testing is
+    % assumed - otherwise the computational time becomes inefficient.
+
+    % Might get you roughly close to the optimal value for the
+    % the hyperparameters  within the constrained budget, but not
+    % all the way.
+\end{frame}
+
+\begin{frame}{VQE with Hyperparameter tuning}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.6\linewidth]{vqe_flowchart_with_optuna.pdf}
+      \caption{
+        Hyperparameter tuning can be seamlessly incorporated into the VQE pipeline.
+        In our case, we use the automatic hyperparameter tuning framework optuna.
+      }
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{VQE Results (Without hyperparameter tuning)}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\linewidth]{ibm_jarkata_cobyla_23_pes.pdf}
+      \caption{
+        Potential energy surface for symmetrically stretched water molecule. In
+        the upper plots, VQE results without ZNE on ibm jarkata appear
+        alongside curves indicating the classically computed Hartree Fock (HF),
+        Complet Active Space Self Consistent Field (CASSCF) for the active
+        space (2e,3o) and full configuration interaction (FCI) values using the STO-3G basis.
+        Lower plots indicate absolute errors, $|E − E_\text{CASSCF}|$.
+      }
+      % at different levels of theory computed on ibm\_kyoto  Full configuration (FCI), Hartree Fock (HF),
+      % Complete Active Space Self Consistent Field (CASSCF) using minimal STO-6G.
+    \end{figure}
+\end{frame}
+
+\begin{frame}{VQE Results (With hyperparameter tuning)}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\linewidth]{ibm_kyoto_cobyla_23_pes.pdf}
+      \caption{
+        Potential energy surface for symmetrically stretched water molecule. In
+        the upper plots, VQE results with and without ZNE on ibm kyoto appear
+        alongside curves indicating the classically computed Hartree Fock (HF),
+        Complet Active Space Self Consistent Field (CASSCF) for the active
+        space (2e,3o) and full configuration interaction (FCI) values using the STO-6G basis.
+        Lower plots indicate absolute errors, $|E − E_\text{CASSCF}|$.
+      }
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{VQE Results (With hyperparameter tuning)}
+  In terms of hardware, ibm kyoto has a much better spec than ibm jarkata.
+  Despite this, hyperparameter tuning on its own does not result in great
+  improvement in the results, if at all across the two devices.
+
+  \begin{figure}
+      \centering
+      \includegraphics[width=.55\linewidth]{../gfx/ibm_kyoto_cobyla_23_optimization_history_nsgaii_median_hyperparameter_offline_d_1.0.pdf}
+      \caption{Energy vs trial number during COBYLA hyperparameter tuning at the reaction coordinate $R = 1.0$. This is for the active space (2e,3o) using the STO-6G basis set.}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}{VQE Results (With hyperparameter tuning)}
+  \begin{figure}
+      \centering
+      \includegraphics[width=.6\linewidth]{../gfx/ibm_kyoto_cobyla_23_intermediate_values_nsgaii_median_hyperparameter_offline_d_1.0.pdf}
+      \caption{Energy vs trial number during COBYLA hyperparameter tuning at the reaction coordinate $R = 1.0$. This is for the active space (2e,3o) using the STO-6G basis set.}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{VQE Results (With hyperparameter tuning)}
+  \begin{figure}
+      \centering
+      \includegraphics[width=.6\linewidth]{../gfx/ibm_kyoto_spsa_23_optimization_history_nsgaii_median_hyperparameter_offline_d_1.0.pdf}
+      \caption{Energy vs trial number during SPSA hyperparameter tuning at the reaction coordinate $R = 1.0$. This is for the active space (2e,3o) using the STO-6G basis set.}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}{VQE Results (With hyperparameter tuning)}
+  \begin{figure}
+      \centering
+      \includegraphics[width=.6\linewidth]{../gfx/ibm_kyoto_spsa_23_intermediate_values_nsgaii_median_hyperparameter_offline_d_1.0.pdf}
+      \caption{Energy vs trial number during SPSA hyperparameter tuning at the reaction coordinate $R = 1.0$. This is for the active space (2e,3o) using the STO-6G basis set.}
+  \end{figure}
+\end{frame}

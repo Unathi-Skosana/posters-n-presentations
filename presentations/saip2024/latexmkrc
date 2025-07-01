@@ -1,0 +1,3 @@
+$bibtex_use = 2;
+$pdf_previewer = 'start okular';
+$clean_ext = "nav snm vrb";
